@@ -18,7 +18,7 @@ import com.valdisdot.mycv.storage.VisitorService;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@Route(value = "/contact")
+@Route(value = "/contact", layout = BasicAppLayout.class)
 public class ContactPage extends Composite<VerticalLayout> {
     private final TextField firstName = new TextField("First name", "Type your first name");
     private final TextField middleName = new TextField("Middle name", "Type your middle name");

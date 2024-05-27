@@ -9,7 +9,7 @@ import com.valdisdot.mycv.storage.PageService;
 import java.util.Collection;
 import java.util.Optional;
 
-@Route(value = "/")
+@Route(value = "/", layout = BasicAppLayout.class)
 public class PersonalCVPage extends CVPage {
     public PersonalCVPage(PageService pageService) {
         super(pageService.getPage());
