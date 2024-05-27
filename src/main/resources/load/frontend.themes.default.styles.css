@@ -1,0 +1,29 @@
+.main-side {
+    background: #badbf5;
+}
+
+.left-side {
+    background: #baf2f5;
+}
+
+.gallery {
+    padding: 0;
+    margin: 0;
+}
+
+h1 {
+    font-size: 0.8rem
+}
+
+ul {
+  list-style: none;
+}
+
+.component {
+    padding: 0;
+    margin: 0;
+}
+
+vaadin-app-layout {
+  --vaadin-app-layout-drawer-overlay: true;
+}
