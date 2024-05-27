@@ -21,6 +21,11 @@ vaadin-app-layout {
 
 vaadin-app-layout::part(navbar) {
     padding-left: 5px;
+    background: rgb(228, 225, 225);
+    border-width: 0 0 2px 0;
+    border-style: solid;
+    border-style: dashed;
+    border-color: #f1c7c7d7;
 }
 
 .navbar-item {
@@ -146,7 +151,7 @@ vaadin-app-layout::part(drawer) {
 
 .top-section-name {
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .top-section-quote {
@@ -159,7 +164,7 @@ vaadin-app-layout::part(drawer) {
     font-size: 1.1rem;
     margin-left: 0.5rem;
     padding: 0.2rem 1rem;
-    background-color: rgba(216, 247, 157, 0.795);
+    background-color: rgba(216, 255, 144, 0.795);
     border-radius: 0.5rem;
     border-width: 1px;
     border-style: dashed;
@@ -171,12 +176,22 @@ vaadin-app-layout::part(drawer) {
     border-style: solid;
 }
 
+.main-list-item-content:hover, .sub-list-item-content:hover, .mini-list-item:hover {
+    background: white;
+    color: black;
+}
+
+.main-list-item-content:hover, .sub-list-item-content:hover, .mini-list-item:hover {
+    background: white;
+    color: black;
+}
+
 .main-list-title, .sub-list-title {
         font-size: 1.2rem;
         padding: 0.2em;
         padding: 0 0.9rem 0 0.9rem;
         border-radius: 0.7rem;
-        background: #ffffff;
+        background: #00ffeaad;
         border-width: 1px;
         border-style: solid;
 }
@@ -201,7 +216,7 @@ vaadin-app-layout::part(drawer) {
 }
 
 .main-list-item-title, .sub-list-item-title {
-    background: #ff00003d;
+    background: #f7bdbd3d;
     font-weight: 600;
     font-size: 1rem;
     padding: 0.2em;
@@ -213,7 +228,7 @@ vaadin-app-layout::part(drawer) {
 
 
 .main-list-item-content, .sub-list-item-content {
-        background: #ffffff;
+        background: #fcfdeb;
         font-size: 0.9rem;
         color: #3b002d;
         padding: 0 0.9rem 0 0.9rem;
@@ -227,9 +242,9 @@ vaadin-app-layout::part(drawer) {
 .form-section {
     width: 65%;
     max-width: 500px;
-    border-size: 1px;
-    border-style: solid;
-    border-radius: 5px;
+    border-width: 2px;
+    border-style: dotted;
+    border-radius: 15px;
 
 }
 
