@@ -12,9 +12,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-//@Theme(value = "strict")
-//figure out how to change it in the runtime
-//
 @Theme(value = "strict")
 @PWA(
         name = "CV Page",
