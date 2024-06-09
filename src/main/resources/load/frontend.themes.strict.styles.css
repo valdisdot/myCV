@@ -1,0 +1,349 @@
+/*COMMON*/
+
+* {
+    margin: 0;
+}
+
+a:link, a:visited {
+    text-decoration: inherit;
+    color: inherit;
+}
+
+vaadin-app-layout {
+  --vaadin-app-layout-drawer-overlay: true;
+}
+
+.text-list-item{
+    margin-left: 0.5rem;
+}
+
+/*HAV BAR*/
+
+vaadin-app-layout::part(navbar) {
+    padding-left: 5px;
+    background: rgb(228, 225, 225);
+    border-width: 0 0 2px 0;
+    border-style: solid;
+    border-style: dashed;
+    border-color: #f1c7c7d7;
+}
+
+.navbar-item {
+    font-size: 1rem;
+    padding-left: 15px;
+}
+
+/*DRAWER*/
+
+vaadin-app-layout::part(drawer) {
+    width: 200px;
+}
+
+
+.cv-download-button {
+    font-size: 0.8rem;
+    height: 2rem;
+    border-radius: 0.5em;
+    margin-left: 2em;
+    margin-top: 1em;
+}
+
+.cv-link-goto {
+    font-size: 0.8rem;
+    height: 2rem;
+    border-radius: 0.5em;
+    margin-left: 2em;
+    margin-top: 1em;
+}
+
+/*try to figure out how to change background in selected item in the nav bar*/
+
+/*CV PAGE*/
+/*COMMON*/
+
+/* .content-container {
+    display: flex;
+    justify-content: center;
+    align-items: top;
+} */
+
+.avatar img{
+    border-radius: 10%;
+    padding: 0;
+    border-width: 3px;
+    border-style: solid;
+}
+
+.top-section-mobile {
+    display: none;
+    background: #aaaaaa25;
+    border-width: 1px;
+    border-style: solid;
+}
+
+.top-section-mobile-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.top-section-mobile-quote {
+    font-style: oblique;
+    font-size: 0.7rem;
+    margin-left: 0.7rem;
+}
+
+.top-section-mobile-content-title {
+    font-size: 1.1rem;
+    margin-left: 0.5rem;
+    padding: 0.2rem 1rem;
+    background-color: rgba(216, 255, 144, 0.795);
+    border-radius: 0.5rem;
+    border-width: 1px;
+    border-style: dashed;
+}
+
+
+.contacts-list, .mini-list, .gallery, .top-section, .top-section-mobile, .main-list, .sub-list  {
+    padding: 0.25rem;
+    border-radius: 0.7rem;
+    margin-top: 0.5rem;
+}
+
+.contacts-list-title, .mini-list-title {
+    font-size: 0.9rem;
+    border-width: 1px;
+    border-style: solid;
+    padding: 0.2em;
+    padding: 0 0.9rem 0 0.9rem;
+    border-radius: 0.7rem;
+    background: #d2ebfab4;
+}
+
+.contacts-list-item-icon, .mini-list-item-icon {
+    font-size: 0.8rem;
+    margin-left: 0.2rem;
+}
+
+.contacts-list-item-title, .mini-list-item-title {
+    font-size: 0.9rem;
+}
+
+.contacts-list-item-content, .mini-list-item-content {
+    font-size: 0.8rem;
+}
+
+.contacts-list-item-subtitle, .mini-list-item-subtitle, .main-list-item-subtitle, .sub-list-item-subtitle {
+    font-style: oblique;
+    font-weight: 600;
+    font-size: 0.7rem;
+    padding-left: 0.5rem;
+    line-height: 1;
+
+}
+
+.contacts-list a:hover {
+    background-color: white;
+    padding: 0 5px 0 5px;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.contacts-list, .mini-list {
+    background: #c0c0c02c;
+    width: 0.8rem;
+    border-width: 1px;
+    border-style: solid;
+}
+
+.mini-list-item {
+    background: #dfdfde;
+    border-radius: 0.5rem;
+    margin-bottom: 0.15rem;
+    min-width: 0.9em;
+    border-width: 1px;
+    border-style: solid;
+}
+
+.gallery img {
+    border-radius: 3%;
+    border-width: 1px;
+    border-style: solid;
+}
+
+.top-section {
+    background: #aaaaaa25;
+    border-width: 1px;
+    border-style: dotted;
+}
+
+.top-section-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.top-section-quote {
+    font-style: oblique;
+    font-size: 0.7rem;
+    margin-left: 0.7rem;
+}
+
+.top-section-content-title {
+    font-size: 1.1rem;
+    margin-left: 0.5rem;
+    padding: 0.2rem 1rem;
+    background-color: rgba(216, 255, 144, 0.795);
+    border-radius: 0.5rem;
+    border-width: 1px;
+    border-style: dashed;
+}
+
+.main-list, .sub-list {
+    background-color: #eef0ee8c;
+    border-width: 1px;
+    border-style: solid;
+}
+
+.main-list-item-content:hover, .sub-list-item-content:hover, .mini-list-item:hover {
+    background: white;
+    color: black;
+}
+
+.main-list-item-content:hover, .sub-list-item-content:hover, .mini-list-item:hover {
+    background: white;
+    color: black;
+}
+
+.main-list-title, .sub-list-title {
+        font-size: 1.2rem;
+        padding: 0.2em;
+        padding: 0 0.9rem 0 0.9rem;
+        border-radius: 0.7rem;
+        background: #00ffeaad;
+        border-width: 1px;
+        border-style: solid;
+}
+
+.top-section-content {
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding: 0.2em;
+    padding: 0 0.9rem 0 0.9rem;
+    border-radius: 0.7rem;
+    background: #dcffff5e;
+    border-width: 1px;
+    border-style: dotted;
+}
+
+.main-list-item-icon, .sub-list-item-icon {
+    background-color: rgba(255, 255, 255, 0.644);
+    padding: 2px;
+    border-radius: 40% 40%;
+    border-width: 1px;
+    border-style: solid;
+}
+
+.main-list-item-title, .sub-list-item-title {
+    color: black;
+    background: #f7bdbd3d;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.2em;
+    padding: 0.1rem 0.9rem 0.1rem 0.9rem;
+    border-radius: 0.7rem;
+    border-width: 1px;
+    border-style: solid;
+}
+
+
+.main-list-item-content, .sub-list-item-content {
+        background: #fcfdeb;
+        font-size: 0.9rem;
+        color: #3b002d;
+        padding: 0 0.9rem 0 0.9rem;
+        margin-bottom: 0.5rem;
+        border-radius: 0.7rem;
+        border-width: 1px;
+        border-style: solid;
+}
+
+/*FORM PAGE*/
+.form-section {
+    width: 65%;
+    max-width: 500px;
+    border-width: 2px;
+    border-style: dotted;
+    border-radius: 15px;
+
+}
+
+.form_field {
+    width: 100%;
+
+}
+
+.send-offer-button {
+    background: green;
+    color: white;
+    border-radius: 5px;
+}
+
+.the-page {
+    align-items: center;
+}
+
+.content-container {
+    display: flex;
+    align-items: stretch;
+    align-self: center;
+    width: 80%;
+    min-width: 800px;
+    max-width: 1200px;
+}
+
+.left-side {
+    max-width: 30%;
+}
+
+.main-side {
+    max-width: 70%;
+}
+
+.avatar img {
+    max-width: 100%;
+    width: 100%;
+}
+
+@media (max-width: 800px) {
+    .content-container {
+        flex-direction: column;
+        align-items: start;
+        width: 100%;
+        min-width: 60%;
+        max-width: 790px;
+    }
+
+    .avatar img {
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+    }
+
+    .left-side {
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    .top-section-mobile {
+        display: flex;
+    }
+
+    .main-side {
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    .top-section {
+        display: none;
+    }
+}
