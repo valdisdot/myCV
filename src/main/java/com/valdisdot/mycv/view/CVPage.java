@@ -3,8 +3,8 @@ package com.valdisdot.mycv.view;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HtmlComponent;
 import com.vaadin.flow.component.Text;
-import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.html.*;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.server.StreamResource;
 import com.valdisdot.mycv.entity.page.ContentItemRecord;
@@ -21,23 +21,15 @@ public abstract class CVPage extends VerticalLayout{
 
     protected CVPage() {
         leftSide = new VerticalLayout();
-        leftSide.setWidth(30, Unit.PERCENTAGE);
         leftSide.addClassNames("left-side");
         leftSide.setSpacing(false);
-
+        leftSide.setAlignItems(Alignment.CENTER);
         mainSide = new VerticalLayout();
-        mainSide.setWidth(70, Unit.PERCENTAGE);
         mainSide.addClassNames("main-side");
         mainSide.setSpacing(false);
-        setSpacing(false);
-        setMargin(false);
-        setPadding(false);
         Div container = new Div();
-        container.setWidth(80, Unit.PERCENTAGE);
         container.setClassName("content-container");
         setWidthFull();
-        container.setMinWidth(800, Unit.PIXELS);
-        container.setMaxWidth(1200, Unit.PIXELS);
         container.add(leftSide);
         container.add(mainSide);
         add(container);
@@ -46,10 +38,11 @@ public abstract class CVPage extends VerticalLayout{
 
     public CVPage(PageRecord pageRecord) {
         this();
-        makeTopSection(pageRecord.getName(), pageRecord.getQuote(), pageRecord.getTopContentTitle(), pageRecord.getTopContent()).ifPresent(this::addToMainSide);
+        makeTopSection(pageRecord.getName(), pageRecord.getQuote(), pageRecord.getTopContentTitle(), pageRecord.getTopContent(), false).ifPresent(this::addToMainSide);
         makeMainListSection(pageRecord.getMainListTitle(), pageRecord.getMainList()).ifPresent(this::addToMainSide);
         makeSubListSection(pageRecord.getSubListTitle(), pageRecord.getSubList()).ifPresent(this::addToMainSide);
         makeAvatar(pageRecord.getAvatar()).ifPresent(this::addToLeftSide);
+        makeTopSection(pageRecord.getName(), pageRecord.getQuote(), pageRecord.getTopContentTitle(), pageRecord.getTopContent(), true).ifPresent(this::addToLeftSide);
         makeContactsListSection(pageRecord.getContactsListTitle(), pageRecord.getContactsList()).ifPresent(this::addToLeftSide);
         makeMiniListSection(pageRecord.getMiniListTitle(), pageRecord.getMiniList()).ifPresent(this::addToLeftSide);
     }
@@ -62,25 +55,25 @@ public abstract class CVPage extends VerticalLayout{
         mainSide.add(components);
     }
 
-    protected Optional<Component> makeTopSection(String name, String quote, String topContentTitle, String topContent) {
+    protected Optional<Component> makeTopSection(String name, String quote, String topContentTitle, String topContent, boolean forMobile) {
         List<Component> components = new LinkedList<>();
-        String cssClassPrefix = "top-section";
+        String cssClassPrefix = "top-section" + (forMobile ? "-mobile" : "");
         if (name != null && !name.isBlank()) {
             H2 nameElement = new H2(name);
             nameElement.setClassName(cssClassPrefix + "-name");
             components.add(nameElement);
-        }
-        if (quote != null && !quote.isBlank()) {
-            Paragraph quoteElement = new Paragraph(quote);
-            quoteElement.setClassName(cssClassPrefix + "-quote");
-            components.add(quoteElement);
         }
         if (topContentTitle != null && !topContentTitle.isBlank()) {
             H3 topContentTitleElement = new H3(topContentTitle);
             topContentTitleElement.setClassName(cssClassPrefix + "-content-title");
             components.add(topContentTitleElement);
         }
-        if (topContent != null && !topContent.isBlank()) {
+        if (quote != null && !quote.isBlank()) {
+            Paragraph quoteElement = new Paragraph(quote);
+            quoteElement.setClassName(cssClassPrefix + "-quote");
+            components.add(quoteElement);
+        }
+        if (!forMobile && topContent != null && !topContent.isBlank()) {
             Paragraph topContentElement = new Paragraph(topContent);
             topContentElement.setClassName(cssClassPrefix + "-content");
             components.add(topContentElement);
@@ -88,7 +81,7 @@ public abstract class CVPage extends VerticalLayout{
         if (components.isEmpty()) return Optional.empty();
         VerticalLayout topSection = new VerticalLayout();
         topSection.setClassName(cssClassPrefix);
-        topSection.setAlignItems(Alignment.START);
+        topSection.setAlignItems(FlexComponent.Alignment.START);
         components.forEach(topSection::add);
         return Optional.of(topSection);
     }
@@ -106,8 +99,6 @@ public abstract class CVPage extends VerticalLayout{
             return Optional.empty();
         String uuid = UUID.randomUUID().toString();
         Image avatar = new Image(new StreamResource(uuid, () -> new ByteArrayInputStream(avatarImageItem.getPhoto())), uuid);
-        avatar.setWidth(100, Unit.PERCENTAGE);
-        avatar.setMaxWidth(100, Unit.PERCENTAGE);
         Div container = new Div(avatar);
         container.addClassName("avatar");
         return Optional.of(container);

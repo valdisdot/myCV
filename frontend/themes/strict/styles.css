@@ -61,11 +61,11 @@ vaadin-app-layout::part(drawer) {
 /*CV PAGE*/
 /*COMMON*/
 
-.content-container {
+/* .content-container {
     display: flex;
     justify-content: center;
     align-items: top;
-}
+} */
 
 .avatar img{
     border-radius: 10%;
@@ -74,8 +74,36 @@ vaadin-app-layout::part(drawer) {
     border-style: solid;
 }
 
+.top-section-mobile {
+    display: none;
+    background: #aaaaaa25;
+    border-width: 1px;
+    border-style: solid;
+}
 
-.contacts-list, .mini-list, .gallery, .top-section, .main-list, .sub-list  {
+.top-section-mobile-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.top-section-mobile-quote {
+    font-style: oblique;
+    font-size: 0.7rem;
+    margin-left: 0.7rem;
+}
+
+.top-section-mobile-content-title {
+    font-size: 1.1rem;
+    margin-left: 0.5rem;
+    padding: 0.2rem 1rem;
+    background-color: rgba(216, 255, 144, 0.795);
+    border-radius: 0.5rem;
+    border-width: 1px;
+    border-style: dashed;
+}
+
+
+.contacts-list, .mini-list, .gallery, .top-section, .top-section-mobile, .main-list, .sub-list  {
     padding: 0.25rem;
     border-radius: 0.7rem;
     margin-top: 0.5rem;
@@ -216,6 +244,7 @@ vaadin-app-layout::part(drawer) {
 }
 
 .main-list-item-title, .sub-list-item-title {
+    color: black;
     background: #f7bdbd3d;
     font-weight: 600;
     font-size: 1rem;
@@ -257,4 +286,64 @@ vaadin-app-layout::part(drawer) {
     background: green;
     color: white;
     border-radius: 5px;
+}
+
+.the-page {
+    align-items: center;
+}
+
+.content-container {
+    display: flex;
+    align-items: stretch;
+    align-self: center;
+    width: 80%;
+    min-width: 800px;
+    max-width: 1200px;
+}
+
+.left-side {
+    max-width: 30%;
+}
+
+.main-side {
+    max-width: 70%;
+}
+
+.avatar img {
+    max-width: 100%;
+    width: 100%;
+}
+
+@media (max-width: 800px) {
+    .content-container {
+        flex-direction: column;
+        align-items: start;
+        width: 100%;
+        min-width: 60%;
+        max-width: 790px;
+    }
+
+    .avatar img {
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+    }
+
+    .left-side {
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    .top-section-mobile {
+        display: flex;
+    }
+
+    .main-side {
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    .top-section {
+        display: none;
+    }
 }
