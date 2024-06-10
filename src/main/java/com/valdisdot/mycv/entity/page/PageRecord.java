@@ -37,7 +37,10 @@ public class PageRecord extends Identifiable {
 
     private String dog;
 
-    public PageRecord(Long id, ImageItemRecord avatar, String name, String quote, String topContentTitle, String topContent, String mainListTitle, List<ContentItemRecord> mainList, String subListTitle, List<ContentItemRecord> subList, String contactsListTitle, List<ContentItemRecord> contactsList, String miniListTitle, List<ContentItemRecord> miniList, List<ImageItemRecord> gallery, String dog) {
+    private String externalCVFileName;
+    private byte[] externalCV;
+
+    public PageRecord(Long id, ImageItemRecord avatar, String name, String quote, String topContentTitle, String topContent, String mainListTitle, List<ContentItemRecord> mainList, String subListTitle, List<ContentItemRecord> subList, String contactsListTitle, List<ContentItemRecord> contactsList, String miniListTitle, List<ContentItemRecord> miniList, List<ImageItemRecord> gallery, String dog, String externalCVFileName, byte[] externalCV) {
         super(id);
         this.name = name;
         this.quote = quote;
@@ -54,10 +57,12 @@ public class PageRecord extends Identifiable {
         this.miniList = miniList == null ? List.of() : miniList;
         this.gallery = gallery == null ? List.of() : gallery;
         this.dog = dog;
+        this.externalCVFileName = externalCVFileName;
+        this.externalCV = externalCV;
     }
 
-    public PageRecord(ImageItemRecord avatar, String name, String quote, String topContentTitle, String topContent, String mainListTitle, List<ContentItemRecord> mainList, String subListTitle, List<ContentItemRecord> subList, String contactsListTitle, List<ContentItemRecord> contactsList, String miniListTitle, List<ContentItemRecord> miniList, List<ImageItemRecord> gallery, String dog) {
-        this(null, avatar, name, quote, topContentTitle, topContent, mainListTitle, mainList, subListTitle, subList, contactsListTitle, contactsList, miniListTitle, miniList, gallery, dog);
+    public PageRecord(ImageItemRecord avatar, String name, String quote, String topContentTitle, String topContent, String mainListTitle, List<ContentItemRecord> mainList, String subListTitle, List<ContentItemRecord> subList, String contactsListTitle, List<ContentItemRecord> contactsList, String miniListTitle, List<ContentItemRecord> miniList, List<ImageItemRecord> gallery, String dog, String externalCVFileName, byte[] externalCV) {
+        this(null, avatar, name, quote, topContentTitle, topContent, mainListTitle, mainList, subListTitle, subList, contactsListTitle, contactsList, miniListTitle, miniList, gallery, dog, externalCVFileName, externalCV);
     }
 
     protected PageRecord() {
@@ -151,5 +156,21 @@ public class PageRecord extends Identifiable {
 
     public String getDog() {
         return dog;
+    }
+
+    public byte[] getExternalCV() {
+        return externalCV;
+    }
+
+    public void setExternalCV(byte[] externalCV) {
+        this.externalCV = externalCV;
+    }
+
+    public String getExternalCVFileName() {
+        return externalCVFileName;
+    }
+
+    public void setExternalCVFileName(String externalCVFileName) {
+        this.externalCVFileName = externalCVFileName;
     }
 }

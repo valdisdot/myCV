@@ -47,6 +47,8 @@ public class DatabaseImpl implements Database {
                     "\t\"mini_list_id\"\tINTEGER,\n" +
                     "\t\"gallery_list_id\"\tINTEGER,\n" +
                     "\t\"dog\"\tTEXT,\n" +
+                    "\t\"external_cv_name\"\tTEXT,\n" +
+                    "\t\"external_cv\"\tBLOB,\n" +
                     "\tPRIMARY KEY(\"id\" AUTOINCREMENT)\n" +
                     ");" +
                     "CREATE TABLE IF NOT EXISTS \"offer\" (\n" +
@@ -72,7 +74,7 @@ public class DatabaseImpl implements Database {
     private Connection instance;
 
     public DatabaseImpl init(String databaseName) {
-
+        Logger.getLogger(DatabaseImpl.class.getName()).log(Level.FINEST, CREATE_IF_NOT_EXISTS.replaceAll("[\n\t]", " "));
         try {
             instance = DriverManager.getConnection("jdbc:sqlite:" + databaseName);
         } catch (SQLException e) {

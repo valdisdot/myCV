@@ -24,7 +24,7 @@ public class PageDAOImpl implements PageDAO {
 
     @Override
     public Long createPage(PageRecord pageRecord) {
-        try (PreparedStatement statement = database.getConnection().prepareStatement("INSERT INTO page(avatar_id,name,quote,top_content_title,top_content,main_list_title,main_list_id,sub_list_title,sub_list_id,contacts_list_title,contacts_list_id,mini_list_title,mini_list_id,gallery_list_id,dog) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)")) {
+        try (PreparedStatement statement = database.getConnection().prepareStatement("INSERT INTO page(avatar_id,name,quote,top_content_title,top_content,main_list_title,main_list_id,sub_list_title,sub_list_id,contacts_list_title,contacts_list_id,mini_list_title,mini_list_id,gallery_list_id,dog,external_cv_name, external_cv) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)")) {
             if (pageRecord.getAvatar() == null) statement.setNull(1, Types.INTEGER);
             else statement.setLong(1, pageRecord.getAvatar().getId());
             statement.setString(2, pageRecord.getName());
@@ -46,6 +46,8 @@ public class PageDAOImpl implements PageDAO {
             if (pageRecord.getGallery().isEmpty()) statement.setNull(14, Types.INTEGER);
             else statement.setLong(14, pageRecord.getGallery().get(0).getListId());
             statement.setString(15, pageRecord.getDog());
+            statement.setString(16, pageRecord.getExternalCVFileName());
+            statement.setBytes(17, pageRecord.getExternalCV());
             statement.executeUpdate();
             return database.getLastPrimaryKeyFor("page");
         } catch (SQLException e) {
@@ -56,7 +58,7 @@ public class PageDAOImpl implements PageDAO {
 
     @Override
     public PageRecord getPageById(Long id) {
-        try (PreparedStatement statement = database.getConnection().prepareStatement("SELECT id,avatar_id,name,quote,top_content_title,top_content,main_list_title,main_list_id,sub_list_title,sub_list_id,contacts_list_title,contacts_list_id,mini_list_title,mini_list_id,gallery_list_id,dog FROM page WHERE id = ?;")) {
+        try (PreparedStatement statement = database.getConnection().prepareStatement("SELECT id,avatar_id,name,quote,top_content_title,top_content,main_list_title,main_list_id,sub_list_title,sub_list_id,contacts_list_title,contacts_list_id,mini_list_title,mini_list_id,gallery_list_id,dog,external_cv_name,external_cv FROM page WHERE id = ?;")) {
             statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
@@ -76,7 +78,9 @@ public class PageDAOImpl implements PageDAO {
                         rs.getString(13),
                         EntityUtil.getSingleItemLazyList(rs.getLong(14)),
                         EntityUtil.getSingleItemImageLazyList(rs.getLong(15)),
-                        rs.getString(16)
+                        rs.getString(16),
+                        rs.getString(17),
+                        rs.getBytes(18)
                 );
             }
         } catch (SQLException e) {

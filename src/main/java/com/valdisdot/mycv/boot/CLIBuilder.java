@@ -8,6 +8,7 @@ import com.valdisdot.mycv.storage.PageService;
 import com.valdisdot.mycv.storage.ServiceException;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -79,6 +80,7 @@ public class CLIBuilder implements Runnable {
                         "18\t- fill the gallery\n" +
                         "19\t- refill the gallery\n" +
                         "20\t- set the dog\n" +
+                        "21\t- set the external CV\n" +
                         "p\t- print the pageRecord\n" +
                         "m\t- print the menu";
         System.out.println(menu);
@@ -210,6 +212,10 @@ public class CLIBuilder implements Runnable {
                     if (!temp.trim().equals("-")) builder.dog(temp);
                     break;
                 }
+                case "21": {
+                    loadExternalCV(builder, scanner);
+                    break;
+                }
                 case "m": {
                     System.out.println(menu);
                     break;
@@ -281,6 +287,8 @@ public class CLIBuilder implements Runnable {
         temp = scanner.nextLine();
         if (!temp.trim().equals("-")) builder.dog(temp);
 
+        loadExternalCV(builder, scanner);
+
         buildManually(scanner, builder, true);
     }
 
@@ -351,6 +359,21 @@ public class CLIBuilder implements Runnable {
         return null;
     }
 
+    private void loadExternalCV(PageBuilder builder, Scanner scanner) {
+        System.out.print("Provide a path to the CV file: ");
+        File file = new File(scanner.nextLine());
+        try (FileInputStream fileInputStream = new FileInputStream(file)) {
+            byte[] fileByteArray = fileInputStream.readAllBytes();
+            builder.externalFile(fileByteArray);
+            builder.externalFileName(file.getName());
+        } catch (IOException e) {
+            System.out.print("Can't read the file: ");
+            System.out.println(file.getAbsolutePath());
+            System.out.print("Try to load another one CV file? (Y): ");
+            if (scanner.nextLine().trim().equalsIgnoreCase("y")) loadExternalCV(builder, scanner);
+        }
+    }
+
     public static class PageBuilder {
         private String name;
         private String quote;
@@ -367,6 +390,8 @@ public class CLIBuilder implements Runnable {
         private List<ContentItemRecord> miniList = new LinkedList<>();
         private List<ImageItemRecord> gallery = new LinkedList<>();
         private String dog;
+        private String externalCVFileName;
+        private byte[] externalCVFile;
 
         public PageBuilder pullValuesFrom(PageRecord pageRecord) {
             this.name = pageRecord.getName();
@@ -384,6 +409,8 @@ public class CLIBuilder implements Runnable {
             this.miniList.addAll(pageRecord.getMiniList() == null ? List.of() : pageRecord.getMiniList());
             this.gallery.addAll(pageRecord.getGallery() == null ? List.of() : pageRecord.getGallery());
             this.dog = pageRecord.getDog();
+            this.externalCVFileName = pageRecord.getExternalCVFileName();
+            this.externalCVFile = pageRecord.getExternalCV();
             return this;
         }
 
@@ -467,10 +494,20 @@ public class CLIBuilder implements Runnable {
             return this;
         }
 
+        public PageBuilder externalFileName(String externalCVFileName){
+            this.externalCVFileName = externalCVFileName;
+            return this;
+        }
+
+        public PageBuilder externalFile(byte[] externalCVFile){
+            this.externalCVFile = externalCVFile;
+            return this;
+        }
+
         public PageRecord build() {
             try {
                 return new PageRecord(
-                        avatar, name, quote, topContentTitle, topContent, mainListTitle, mainList, subListTitle, subList, contactsListTitle, contactsList, miniListTitle, miniList, gallery, dog);
+                        avatar, name, quote, topContentTitle, topContent, mainListTitle, mainList, subListTitle, subList, contactsListTitle, contactsList, miniListTitle, miniList, gallery, dog, externalCVFileName, externalCVFile);
             } finally {
                 name = null;
                 quote = null;
@@ -487,6 +524,8 @@ public class CLIBuilder implements Runnable {
                 miniList = null;
                 gallery = null;
                 dog = null;
+                externalCVFileName = null;
+                externalCVFile = null;
             }
         }
 
@@ -544,7 +583,11 @@ public class CLIBuilder implements Runnable {
                 if (item != null) builder.append("\nphoto (bytes): ").append(item.getPhoto().length);
             builder
                     .append("\ndog: ")
-                    .append(dog);
+                    .append(dog)
+                    .append("\nexternal CV file: ")
+                    .append(externalCVFileName)
+                    .append(", length: ")
+                    .append(externalCVFile == null ? 0 : externalCVFile.length);
             return builder.toString();
         }
     }

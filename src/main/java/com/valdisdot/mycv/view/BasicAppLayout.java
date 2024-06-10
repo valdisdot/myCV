@@ -11,17 +11,17 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.sidenav.SideNav;
 import com.vaadin.flow.component.sidenav.SideNavItem;
 import com.vaadin.flow.router.HasDynamicTitle;
-import com.vaadin.flow.server.InputStreamFactory;
 import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.server.WebBrowser;
 import com.vaadin.flow.theme.lumo.LumoIcon;
+import com.valdisdot.mycv.entity.page.PageRecord;
 import com.valdisdot.mycv.view.component.LazyDownloadButton;
 import com.valdisdot.mycv.entity.visitor.VisitRecord;
 import com.valdisdot.mycv.storage.PageService;
 import com.valdisdot.mycv.storage.VisitorService;
 import org.springframework.core.env.Environment;
 
-import java.io.InputStream;
+import java.io.ByteArrayInputStream;
 import java.util.Optional;
 
 public class BasicAppLayout extends AppLayout implements HasDynamicTitle {
@@ -61,12 +61,15 @@ public class BasicAppLayout extends AppLayout implements HasDynamicTitle {
         titleHeader.setClassName("navbar-item");
 
         addToDrawer(makeSideBar());
-        Button downloadCVButton = new LazyDownloadButton("Download CV", LumoIcon.DOWNLOAD.create(), () -> "test.txt", new InputStreamFactory() {
-            @Override
-            public InputStream createInputStream() {
-                return viewService.getPageInputStream(environment.getProperty("mycv.page.print", Long.class));
-            }
-        });
+        PageRecord lastPage = viewService.getPage();
+        Button downloadCVButton = new LazyDownloadButton(
+                "Download CV",
+                LumoIcon.DOWNLOAD.create(),
+                lastPage.getExternalCVFileName() == null ?
+                        () -> "cv.txt" : () -> lastPage.getExternalCVFileName(),
+                lastPage.getExternalCV() == null ?
+                        () -> new ByteArrayInputStream("to be continued ;)".getBytes()) : () -> new ByteArrayInputStream(lastPage.getExternalCV())
+        );
         downloadCVButton.setClassName("cv-download-button");
         addToDrawer(new Div(downloadCVButton));
         if (environment.containsProperty("mycv.link.git")) {

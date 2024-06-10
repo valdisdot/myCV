@@ -10,6 +10,4 @@ public interface PageService {
     PageRecord getPage();
 
     PageRecord getPage(Long pageId);
-
-    InputStream getPageInputStream(Long pageId);
 }

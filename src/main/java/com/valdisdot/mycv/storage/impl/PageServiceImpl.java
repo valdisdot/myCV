@@ -7,9 +7,6 @@ import com.valdisdot.mycv.storage.PageService;
 import com.valdisdot.mycv.storage.ServiceException;
 import org.springframework.stereotype.Service;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-
 @Service
 public class PageServiceImpl implements PageService {
     private final PageDAO dao;
@@ -37,7 +34,9 @@ public class PageServiceImpl implements PageService {
                 pageRecord.getMiniListTitle(),
                 pageRecord.getMiniList().isEmpty() ? null : EntityUtil.getSingleItemLazyList(dao.createListItems(pageRecord.getMiniList())),
                 pageRecord.getGallery().isEmpty() ? null : EntityUtil.getSingleItemImageLazyList(dao.createImageItems(pageRecord.getGallery())),
-                pageRecord.getDog()
+                pageRecord.getDog(),
+                pageRecord.getExternalCVFileName(),
+                pageRecord.getExternalCV()
         );
         dao.createPage(pageRecord);
         //the created pageRecord is the last pageRecord
@@ -72,14 +71,5 @@ public class PageServiceImpl implements PageService {
         if (!pageRecord.getGallery().isEmpty())
             pageRecord.setGallery(dao.getImageItemsByGalleryId(pageRecord.getGallery().get(0).getListId()));
         return pageRecord;
-    }
-
-    @Override
-    public InputStream getPageInputStream(Long pageId) {
-        return generateCVFileAsDocx(pageId);
-    }
-
-    private InputStream generateCVFileAsDocx(Long pageId) {
-        return new ByteArrayInputStream("Test mode!".getBytes());
     }
 }
