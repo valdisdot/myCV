@@ -93,7 +93,9 @@ public class PageRecordDAOImplTest {
                 "soft skills",
                 EntityUtil.getSingleItemLazyList(dao.createListItems(List.of(new ContentItemRecord("❤".getBytes(StandardCharsets.UTF_8), "a title", "a subtitle", "a content"), new ContentItemRecord("❤".getBytes(StandardCharsets.UTF_8), "a title", "a subtitle", "a content")))),
                 EntityUtil.getSingleItemImageLazyList(dao.createImageItems(List.of(new ImageItemRecord(img), new ImageItemRecord(img)))),
-                "2024"
+                "2024",
+                "test.txt",
+                "test".getBytes()
         );
         assertNotNull(dao.createPage(pageRecord));
     }
