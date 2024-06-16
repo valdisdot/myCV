@@ -43,19 +43,7 @@ public class ContactPage extends Composite<VerticalLayout> {
         offer.setClassName("form_field");
 
 
-        Button sendButton = new Button("Send");
-        sendButton.addClickListener(click -> {
-            OfferRecord offerRecordEntity = new OfferRecord();
-            try {
-                if (offerBinder.isValid()) {
-                    offerBinder.writeBean(offerRecordEntity);
-                    visitorService.createVisit(new VisitRecord("offer", offerRecordEntity));
-                } else Notification.show("Type at least first name, phone and the offer!");
-            } catch (ValidationException e) {
-                Logger.getLogger(this.getClassName()).log(Level.WARNING, e, e::getLocalizedMessage);
-            }
-        });
-        sendButton.setClassName("send-offer-button");
+        Button sendButton = makeSendButton(visitorService, offerBinder);
         getContent().setSizeFull();
         getContent().setAlignItems(FlexComponent.Alignment.CENTER);
         VerticalLayout container = new VerticalLayout();
@@ -73,5 +61,36 @@ public class ContactPage extends Composite<VerticalLayout> {
         );
         container.setClassName("form-section");
         getContent().add(container);
+    }
+
+    private Button makeSendButton(VisitorService visitorService, BeanValidationBinder<OfferRecord> offerBinder) {
+        Button sendButton = new Button("Send");
+        sendButton.addClickListener(click -> {
+            OfferRecord offerRecordEntity = new OfferRecord();
+            try {
+                if (offerBinder.isValid()) {
+                    offerBinder.writeBean(offerRecordEntity);
+                    visitorService.createVisit(new VisitRecord("offer", offerRecordEntity));
+                    Notification.show("Thank you for the offer! I'll contact you as soon as possible.", 10000, Notification.Position.BOTTOM_START);
+                    offerBinder.setValidatorsDisabled(true);
+                    resetFields();
+                    offerBinder.setValidatorsDisabled(false);
+                } else Notification.show("Type at least first name, phone and the offer!");
+            } catch (ValidationException e) {
+                Logger.getLogger(this.getClassName()).log(Level.WARNING, e, e::getLocalizedMessage);
+            }
+        });
+        sendButton.setClassName("send-offer-button");
+        return sendButton;
+    }
+
+    private void resetFields(){
+        firstName.setValue("");
+        middleName.setValue("");
+        lastName.setValue("");
+        company.setValue("");
+        phone.setValue("");
+        email.setValue("");
+        offer.setValue("");
     }
 }
