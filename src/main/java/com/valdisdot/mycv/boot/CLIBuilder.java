@@ -94,7 +94,11 @@ public class CLIBuilder implements Runnable {
                     System.out.println("Trying to save the page.");
                     try {
                         PageRecord page = pageService.createPage(builder.build());
-                        if (page != null) break optionLabel;
+                        if (page != null) {
+                            System.out.println("Page has been saved.");
+                            continueOrExit(scanner);
+                            break optionLabel;
+                        }
                         System.out.println("Page record is empty, something went wrong.");
                     } catch (ServiceException e) {
                         System.out.println("Can't save the page.");
@@ -228,6 +232,14 @@ public class CLIBuilder implements Runnable {
                     System.out.printf("'%s' is unknown option.", temp);
                 }
             }
+        }
+    }
+
+    private void continueOrExit(Scanner scanner) {
+        System.out.print("Run the application on the web-server? (Y): ");
+        if(!scanner.nextLine().trim().equalsIgnoreCase("y")) {
+            System.out.println("Exit the builder mode.");
+            System.exit(0);
         }
     }
 
