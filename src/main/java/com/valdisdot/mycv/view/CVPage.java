@@ -81,6 +81,7 @@ public abstract class CVPage extends VerticalLayout{
         if (components.isEmpty()) return Optional.empty();
         VerticalLayout topSection = new VerticalLayout();
         topSection.setClassName(cssClassPrefix);
+        topSection.setSpacing(false);
         topSection.setAlignItems(FlexComponent.Alignment.START);
         components.forEach(topSection::add);
         return Optional.of(topSection);
@@ -180,10 +181,11 @@ public abstract class CVPage extends VerticalLayout{
                 return new Text(text);
             }
         } else if (text.contains("@")) {
+            if(text.startsWith("@")) {
+                return new Anchor("https://t.me/" + text.substring(1), text, AnchorTarget.BLANK);
+            }
             String[] tokens = text.split("@");
             if (tokens.length == 2) {
-                if (tokens[0].equals("telegram") || tokens[0].equals("tg"))
-                    return new Anchor("https://t.me/" + tokens[1], text, AnchorTarget.BLANK);
                 if (tokens[1].contains(".")) return new Anchor("mailto:" + text, text);
             }
         } else if (text.replace("s", "").contains("http://")) {
