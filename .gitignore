@@ -37,4 +37,5 @@ build/
 ### myCV ###
 media/
 frontend/generated
+frontend/index.html
 *.db
